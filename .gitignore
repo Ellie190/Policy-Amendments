@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+.Rproj.user
+
+# Renviron
+.Renviron
+
+~NCdata.xlsx
