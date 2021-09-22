@@ -49,6 +49,8 @@ STEPS to get API
 8. Click create credentials on the top bar 
 9. Then click API Key, copy key someone safe
 10. Click restrict key
+
+- OSM: OpenStreetMap
 ```{r warning=FALSE, message=FALSE}
 # register_google(key = Sys.getenv("GOOGLEGEOCODE_API_KEY"), write = TRUE)
 geo_data <- data %>%
@@ -59,12 +61,7 @@ geo_data <- data %>%
 ```{r warning=FALSE, message=FALSE}
 library(sf)
 library(mapview)
-```
-
-
-```{r warning=FALSE, message=FALSE}
-# locations_sf <- st_as_sf(geo_data, coords = c("longitude", "latitude"), crs = 4326)
-```
+``` 
 
 
 ```{r warning=FALSE, message=FALSE}
@@ -79,7 +76,7 @@ sapply(geo_data, function(x) sum(is.na(x)))
 #### Rows with missing data
 - City Not recognized by Google 
 - City spelled incorrectly 
-- Cities not recognised by map
+- Cities not recognized by map
 ```{r warning=FALSE, message=FALSE}
 geo_data[rowSums(is.na(geo_data)) > 0,]
 ```
@@ -90,6 +87,8 @@ locations_df <- subset(geo_data, !is.na(geo_data$longitude) & !is.na(geo_data$la
 ```
 
 
+#### Convert foreign object to an sf object
+- The SF (or Simple Features) library is a big change in how R handles spatial data
 ```{r warning=FALSE, message=FALSE}
 locations_sf <- st_as_sf(locations_df, coords = c("longitude", "latitude"), crs = 4326)
 ```
@@ -115,6 +114,9 @@ mapview(locations_sf)
 #### Working with MAP View
 Source: https://r-spatial.github.io/mapview/articles/articles/mapview_02-advanced.html
 Source2: https://bookdown.org/nicohahn/making_maps_with_r5/docs/mapview.html
+
+#### Creating Synthetic Data
+- This is test the idea of mapping clusters
 ```{r warning=FALSE, message=FALSE}
 clust_gdata <- locations_df
 clust_gdata$Group <-sample(rep(c("Cluster 1", "Cluster 2", "Cluster 3"),
@@ -122,7 +124,7 @@ clust_gdata$Group <-sample(rep(c("Cluster 1", "Cluster 2", "Cluster 3"),
        size = nrow(locations_df))
 ```
 
-
+#### SF object of cluster data
 ```{r warning=FALSE, message=FALSE}
 clust_sf <- st_as_sf(clust_gdata, coords = c("longitude", "latitude"), crs = 4326)
 ```
@@ -157,66 +159,55 @@ data$City
 ```
 
 
+#### Create Second Dataframe
 ```{r warning=FALSE, message=FALSE}
-geo(
-  state = "Northern Cape", method = "osm",
-  lat = latitude, long = longitude
-)
+df <- data
+```
+
+#### Geocoding data with Northern Cape Tag
+```{r warning=FALSE, message=FALSE}
+df$City <- paste0(df$City, ", Northern Cape")
+```
+
+#### Geocoding
+```{r warning=FALSE, message=FALSE}
+geo_df <- df %>% 
+  tidygeocoder::geocode(City, method = 'osm', lat = latitude , long = longitude)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
+geo_df
+```
 
+#### check missing values
+```{r warning=FALSE, message=FALSE}
+sapply(geo_df, function(x) sum(is.na(x)))
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
+geo_df[rowSums(is.na(geo_df)) > 0,]
+```
 
+#### removing NA
+```{r warning=FALSE, message=FALSE}
+locations_df2 <- subset(geo_df, !is.na(geo_df$longitude) & !is.na(geo_df$latitude))
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-
+locations_sf2 <- st_as_sf(locations_df2, coords = c("longitude", "latitude"), crs = 4326)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-
+mapview(locations_sf2)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
+# write.csv(geo_df, "geo_NCdata2.csv")
 ```
 
 
