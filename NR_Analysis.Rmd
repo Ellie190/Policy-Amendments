@@ -19,6 +19,7 @@ library(tidygeocoder)
 library(sf)
 library(mapview)
 library(RColorBrewer)
+library(plotly)
 ```
 
 
@@ -40,6 +41,25 @@ nr_data <- select(data, c("City", "Availability of Water", "Agricultural Potenti
 head(nr_data)
 ```
 
+## Distribution Analysis 
+- `Availability of water:` Rainfall, Dams, Perennial rivers, Ground water potential, Boreholes
+- `Agricultural Potential:` Crop production / Irrigated land, Grazing Capacity, Agro-processing facilities, Land capability, Aridity zones
+- `Mining Potential:` Active mines, Mineral deposits, Mining applications
+- `Tourism Potential:` Terrain index, Cultural and heritage sites
+- `Environment Sensitivity:` Protected and Conservation Areas, Biodiversity and Geohazards, NFEPA rivers and wetlands. 
+```{r warning=FALSE, message=FALSE}
+fig <- nr_data %>%
+  plot_ly(
+    y = ~`Availability of Water`,
+    type = 'violin',
+    box = list(visible = T),meanline = list(visible = T), x0 = 'Availability of Water') 
+fig <- fig %>%
+  layout(
+    title = "Distribution of Availability of Water",
+    yaxis = list(title = "%", zeroline = F))
+
+fig
+```
 
 Cities/Towns that are not geocoded 
 ```{r warning=FALSE, message=FALSE}
@@ -167,11 +187,6 @@ nr_clust_table <- aggregate(nr_clust,
 ```
 
 
-- `Availability of water:` Rainfall, Dams, Perennial rivers, Ground water potential, Boreholes
-- `Agricultural Potential:` Crop production / Irrigated land, Grazing Capacity, Agro-processing facilities, Land capability, Aridity zones
-- `Mining Potential:` Active mines, Mineral deposits, Mining applications
-- `Tourism Potential:` Terrain index, Cultural and heritage sites
-- `Environment Sensitivity:` Protected and Conservation Areas, Biodiversity and Geohazards, NFEPA rivers and wetlands. 
 ```{r warning=FALSE, message=FALSE}
 nr_clust_table
 ```
