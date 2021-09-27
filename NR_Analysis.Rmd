@@ -11,6 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Analysis 
 
+- **Policy** – A course or principle of action adopted or proposed by an organization or individual. Policy is a deliberate system of guidelines to guide decisions and achieve rational outcomes. 
+- **Natural Resources** - Natural resources are materials from the Earth that are used to support life and meet people's needs
+- **Natural Resource Policy** - A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources
+- **Courses of action /Recommendations** - Improve the look of the cities for more tourism attraction, supply more water to cities that need it. Identify possible short routes between Cities and Towns with similar natural resources and aid where needed. 
+
+![Natural Resource Policy](nr_policy.jpg)
+
 Importing libraries 
 ```{r warning=FALSE, message=FALSE}
 library(dplyr)

@@ -11,6 +11,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Analysis 
 
+- **Policy** – A course or principle of action adopted or proposed by an organization or individual. Policy is a deliberate system of guidelines to guide decisions and achieve rational outcomes. 
+- **Human Development** - Human development is defined as the process of enlarging people’s freedoms and opportunities and improving their well-being
+- **Human Development Index** - The HDI is a summary measure of human development.he HDI is a summary composite measure of a country's average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country's average achievements in three dimensions of human development
+
+
+**HDI Aspects**:
+
+- a long and healthy life, as measured by life expectancy at birth;
+- knowledge, as measured by mean years of schooling and expected years of schooling; and
+- a decent standard of living, as measured by GNI per capita in PPP terms in US$.
+
+**HDI consequences and implications**: 
+
+- The HDI is used to capture the attention of policy-makers, the media and nongovernmental organizations, and to change the focus from the usual economic statistics to human outcomes. It was created to re-emphasize that people and their capabilities should be the ultimate criteria for assessing the development of a country, not economic growth.
+
+**Course of action/recommendation**
+- More educators, Jobs and medical specialists to improve HDI
+
+![Human Development Policy](hd_policy.jpg)
+
+**Extra Sources on HDI**
+
+- http://hdr.undp.org/en/content/policies-human-development-0
+- http://hdr.undp.org/en/content/human-development-index-hdi 
+- https://www.who.int/data/nutrition/nlis/info/human-development-index
+
 Importing libraries 
 ```{r warning=FALSE, message=FALSE}
 library(dplyr)
