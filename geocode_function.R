@@ -17,12 +17,12 @@ miles <- 100
 paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
        paste0(miles, "mi"))
 
-geocode_EK <- function(loc, mil) {
+geocode_ES <- function(loc, mil) {
   geo_loc <- tidygeocoder::geo(loc, method = 'osm', lat = latitude, long = longitude)
   paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
          paste0(mil, "mi"))
   
 }
 
-geocode_EK("london, uk", 100)
+geocode_ES("london, uk", 100)
 
