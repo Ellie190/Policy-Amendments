@@ -28,5 +28,20 @@ dashboardPage(
       menuItem("Dashboard Info", tabName = "di", icon = icon("info"))
     )
   ), # end of sidebar
-  dashboardBody() # end of body
+  dashboardBody(
+    tabItems(
+      tabItem("nha",
+              fluidPage(
+                fluidRow(
+                  column(9,
+                         box(title = "Attribute Mapping", status = "white",
+                             width = 12,
+                             solidHeader = TRUE, maximizable = TRUE)),
+                  column(3,
+                         box(title = "Select Attribute", status = "primary",
+                             width = 12, solidHeader = TRUE))
+                )
+              )) # end of nha tab
+    )
+  ) # end of body
 ) # end of Page 
