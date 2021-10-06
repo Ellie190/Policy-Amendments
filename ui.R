@@ -1,5 +1,13 @@
 library(shiny)
 library(bs4Dash)
+library(readxl)
+library(dplyr)
+library(tidygeocoder)
+library(janitor)
+library(leaflet)
+library(plotly)
+library(DT)
+library(leafpop)
 
 dashboardPage(
   fullscreen = TRUE,
@@ -18,7 +26,7 @@ dashboardPage(
     status = "warning",
     sidebarUserPanel(
       image = "https://image.flaticon.com/icons/svg/1149/1149168.svg",
-      name = "Analysis"
+      name = " Analysis"
     ),
     sidebarMenu(
       menuItem("NR & HDI Amount", tabName = "nha", icon = icon("map-marked")),
@@ -36,10 +44,16 @@ dashboardPage(
                   column(9,
                          box(title = "Attribute Mapping", status = "white",
                              width = 12,
-                             solidHeader = TRUE, maximizable = TRUE)),
+                             solidHeader = TRUE, maximizable = TRUE,
+                             leafletOutput("tab1_map")
+                             )),
                   column(3,
-                         box(title = "Select Attribute", status = "primary",
-                             width = 12, solidHeader = TRUE))
+                         box(title = "View Card", status = "primary",
+                             width = 12, solidHeader = TRUE,
+                             uiOutput("attr_sel1"),
+                             strong("Cities not recognised by OpenStreetMap"),
+                             p(" "),
+                             dataTableOutput("tab1_tbl", height = 2)))
                 )
               )) # end of nha tab
     )

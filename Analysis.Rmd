@@ -69,7 +69,7 @@ data <- read_excel("NCdata.xlsx", sheet = "PERCENT", range = cell_rows(1:98))
 data <- select(data, c(1, "Availability of Water", "Agricultural Potential",
                        "Mining Potential", "Tourism Potential", "Environmental Sensitivity",
                        "Education", "Income", "Occupation", 
-                       "Health Status", "Housing"))
+                       "Health Status", "Housing", "Natural Resources", "Human Development Index"))
 ```
 
 Renaming the first column to city 

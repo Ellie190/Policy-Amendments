@@ -23,18 +23,25 @@ library(sf)
 library(mapview)
 library(RColorBrewer)
 library(plotly)
+library(janitor)
 ```
 
 
 Importing data 
 ```{r}
 data <- read_excel("geo_NCdata.xlsx")
+data <- clean_names(data)
 ```
 
 
 Cities/Towns that are not geocoded 
 ```{r}
-data[rowSums(is.na(data)) > 0,]$City
+osm_missing_city <- data[rowSums(is.na(data)) > 0,]$city
+osm_missing_city <- substr(osm_missing_city,1,regexpr(",",osm_missing_city)-1)
+osm_na_df <- as.data.frame(osm_missing_city)
+osm_na_df
+# osm_na <- substr(osm_na,1,regexpr(",",osm_na)-1)
+# writeLines(osm_na)
 ```
 
 Removing Cities that are not geocoded 
@@ -50,30 +57,50 @@ NR_HDI <- st_as_sf(locations, coords = c("longitude", "latitude"), crs = 4326)
 
 
 ```{r}
-mapview(NR_HDI, legend = FALSE,
-        zcol = "City",
-        cex = "Availability of Water",
-        col.regions = "red")
+# mapview(NR_HDI, legend = FALSE,
+#         zcol = "City",
+#         cex = "Availability of Water",
+#         col.regions = "red")
+```
+
+### Using Leaflet
+```{r}
+library(leaflet)
 ```
 
 
 ```{r}
-
+col <- colorQuantile("Greens", locations$availability_of_water, n = 10)
 ```
 
 
 ```{r}
+leaflet(data = locations) %>% 
+    addTiles(group = "OSM") %>% 
+    addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
+    addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
+    addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
+    addCircleMarkers(~longitude, ~latitude, color = ~col(availability_of_water),
+                     stroke = FALSE,
+                     fillOpacity = 1, radius = 10,
+                     popup = ~city, group = "NR & HDI Amount") %>% 
+    addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
+                                    "CartoDB.DarkMatter"),
+                     overlayGroups = c("NR & HDI Amount"),
+                     position = "topleft") %>% 
+    addLegend("bottomleft", pal = col, values = ~availability_of_water, 
+            title = "water", opacity = 1)
 
 ```
 
 
+
+
+#### Handling column names with spaces in R
 ```{r}
+library(janitor)
 
-```
-
-
-```{r}
-
+clean_names(data)
 ```
 
 
