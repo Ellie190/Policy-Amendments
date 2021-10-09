@@ -11,7 +11,7 @@ server <- function(input, output, session) {
   
   output$attr_sel1 <- renderUI({
     selectInput('sel_attribute1',
-                label = "Select Mapping Attribute",
+                label = "Select Mapping Indicator",
                 choices = c("Natural Resources" = TRUE,
                             "Human Development Index" = FALSE),
                 selected = TRUE)
@@ -52,7 +52,7 @@ server <- function(input, output, session) {
                          overlayGroups = c("NR & HDI Amount"),
                          position = "topright") %>% 
         addLegend("bottomleft", pal = col_nr, values = ~natural_resources,
-                  title = "Natural Resource", opacity = 1) 
+                  title = "Natural Resource %", opacity = 1) 
     } else {
       col_hdi <- colorNumeric("RdYlBu", locations()$human_development_index)
       
@@ -72,7 +72,22 @@ server <- function(input, output, session) {
                          overlayGroups = c("NR & HDI Amount"),
                          position = "topright") %>% 
         addLegend("bottomleft", pal = col_hdi, values = ~human_development_index,
-                  title = "Human Development Index", opacity = 1) 
+                  title = "Human Development Index %", opacity = 1) 
     } })
   
+  
+  # Natural Resources 
+  
+  locations_nr <- reactive({
+    locations_nr <- select(data(), c("city", "availability_of_water", "agricultural_potential",
+                                   "mining_potential", "tourism_potential", "environmental_sensitivity",
+                                   "latitude", "longitude"))
+    locations_nr
+  })
+  
+  output$dist1 <- renderUI({
+    varSelectInput("tab1_dist", label = "Distribution Indicator",
+                   locations_nr()[, c(2:6)],
+                   selected = "availability_of_water")
+  })
 }

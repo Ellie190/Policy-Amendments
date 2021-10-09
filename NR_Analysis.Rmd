@@ -230,23 +230,49 @@ ggplotly(locations_nr %>%
 ### Viewing Mapview according to clusters
 - SF object of cluster data for Natural Resources
 ```{r warning=FALSE, message=FALSE}
-Natural_Resource <- st_as_sf(locations_nr, coords = c("longitude", "latitude"), crs = 4326)
+# Natural_Resource <- st_as_sf(locations_nr, coords = c("longitude", "latitude"), crs = 4326)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-mapview(Natural_Resource, 
-        zcol = "Cluster")
+# mapview(Natural_Resource, 
+#         zcol = "Cluster")
+```
+
+
+### Leaflet 
+```{r warning=FALSE, message=FALSE}
+library(leaflet)
+library(leafpop)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
+col_nr <- colorFactor("Set1", locations_hdi$Cluster)
 
-```
-
-
-```{r warning=FALSE, message=FALSE}
-
+leaflet(data = locations_hdi) %>% 
+  addTiles(group = "OSM") %>% 
+  addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
+  addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
+  addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
+  addCircleMarkers(~longitude, ~latitude, color = ~col_nr(Cluster),
+                   stroke = FALSE,
+                   fillOpacity = 1, radius = 10,
+                   popup = popupTable(locations_hdi,
+                                      zcol = c("City",
+                                               "Education",
+                                               "Income",
+                                               "Occupation",
+                                               "Health Status",
+                                               "Housing",
+                                               "Cluster")), 
+                   group = "Natural Resource") %>% 
+  addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
+                                  "CartoDB.DarkMatter"),
+                   overlayGroups = c("Natural Resource"),
+                   position = "topright") %>% 
+  addLegend("bottomleft", pal = col_nr, values = ~Cluster,
+            title = "HDI Cluster", opacity = 1) 
 ```
 
 

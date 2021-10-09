@@ -261,12 +261,37 @@ mapview(Human_Development,
 
 
 ```{r warning=FALSE, message=FALSE}
-
+library(leaflet)
+library(leafpop)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
+col_nr <- colorFactor("Set1", locations_nr$Cluster)
 
+leaflet(data = locations_nr) %>% 
+  addTiles(group = "OSM") %>% 
+  addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
+  addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
+  addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
+  addCircleMarkers(~longitude, ~latitude, color = ~col_nr(Cluster),
+                   stroke = FALSE,
+                   fillOpacity = 1, radius = 10,
+                   popup = popupTable(locations_nr,
+                                      zcol = c("City",
+                                               "Availability of Water",
+                                               "Agricultural Potential",
+                                               "Mining Potential",
+                                               "Tourism Potential",
+                                               "Environmental Sensitivity",
+                                               "Cluster")), 
+                   group = "Natural Resource") %>% 
+  addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
+                                  "CartoDB.DarkMatter"),
+                   overlayGroups = c("Natural Resource"),
+                   position = "topright") %>% 
+  addLegend("bottomleft", pal = col_nr, values = ~Cluster,
+            title = "NR Cluster", opacity = 1) 
 ```
 
 

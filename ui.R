@@ -42,7 +42,7 @@ dashboardPage(
               fluidPage(
                 fluidRow(
                   column(9,
-                         box(title = "Attribute Mapping", status = "white",
+                         box(title = "Indicator Mapping", status = "white",
                              width = 12,
                              solidHeader = TRUE, maximizable = TRUE,
                              leafletOutput("tab1_map")
@@ -55,7 +55,75 @@ dashboardPage(
                              p(" "),
                              dataTableOutput("tab1_tbl", height = 2)))
                 )
-              )) # end of nha tab
-    )
+              )), # end of nha tab
+      tabItem("nr",
+              fluidPage(
+                fluidRow(
+                  column(3,
+                         box(title = "View Card", status = "warning",
+                             width = 12, solidHeader = FALSE, elevation = 5,
+                             uiOutput("dist1"),
+                             numericInput("clustnum1", "Enter Number of Groups",
+                                          value = 7,
+                                          min = 2, max = 8,
+                                          width = "auto"))),
+                  column(4,
+                         box(title = "Distribution", status = "white",
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             plotlyOutput("distplt1"))),
+                  column(5,
+                         box(title = "City/Town Groups", status = "white",
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             plotlyOutput("clustplt1")))
+                ),
+                fluidRow(
+                  column(6,
+                         box(title = "City Group Mapping", status = "warning",
+                             width = 12, solidHeader = FALSE, maximizable = TRUE,
+                             leafletOutput("clust_nr"))),
+                  column(6,
+                         tabBox(maximizable = TRUE, width = 12,
+                                solidHeader = FALSE, status = "warning",
+                                tabPanel("Group Table",
+                                         dataTableOutput("clustTbl1")),
+                                tabPanel("Group Count",
+                                         dataTableOutput("clustbar1"))))
+                )
+              )),
+      tabItem("hdi",
+              fluidPage(
+                fluidRow(
+                  column(3,
+                         box(title = "View Card", status = "warning",
+                             width = 12, solidHeader = FALSE, elevation = 5,
+                             uiOutput("dist2"),
+                             numericInput("clustnum1", "Enter Number of Groups",
+                                          value = 7,
+                                          min = 2, max = 8,
+                                          width = "auto"))),
+                  column(4,
+                         box(title = "Distribution", status = "white",
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             plotlyOutput("distplt2"))),
+                  column(5,
+                         box(title = "City/Town Groups", status = "white",
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             plotlyOutput("clustplt2")))
+                ),
+                fluidRow(
+                  column(6,
+                         box(title = "City Group Mapping", status = "warning",
+                             width = 12, solidHeader = FALSE, maximizable = TRUE,
+                             leafletOutput("clust_hdi"))),
+                  column(6,
+                         tabBox(maximizable = TRUE, width = 12,
+                                solidHeader = FALSE, status = "warning",
+                                tabPanel("Group Table",
+                                         dataTableOutput("clustTbl2")),
+                                tabPanel("Group Count",
+                                         dataTableOutput("clustbar2"))))
+                )
+              ))
+    ) # end of tabItems 
   ) # end of body
 ) # end of Page 
