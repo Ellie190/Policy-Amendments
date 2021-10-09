@@ -230,13 +230,13 @@ ggplotly(locations_nr %>%
 ### Viewing Mapview according to clusters
 - SF object of cluster data for Natural Resources
 ```{r warning=FALSE, message=FALSE}
-# Natural_Resource <- st_as_sf(locations_nr, coords = c("longitude", "latitude"), crs = 4326)
+Natural_Resource <- st_as_sf(locations_nr, coords = c("longitude", "latitude"), crs = 4326)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-# mapview(Natural_Resource, 
-#         zcol = "Cluster")
+mapview(Natural_Resource,
+        zcol = "Cluster")
 ```
 
 

@@ -125,7 +125,7 @@ server <- function(input, output, session) {
     ggplotly(fviz_cluster(locations_nr_cluster(), data = locations_nr_scale()) +
                theme_minimal() +
                theme(legend.position = "none") +
-               ggtitle("Natural Resource Clusters (Groups)"))
+               ggtitle(""))
   })
   
   nr_clust_df <- reactive({
@@ -165,8 +165,7 @@ server <- function(input, output, session) {
                          vjust = -0.25) +
                coord_flip() +
                labs(x = "Group", 
-                    y = "Number of Cities/Towns",
-                    title = "Natural Resource Grouping (Clusters)") +
+                    y = "Number of Cities/Towns") +
                theme_minimal())
   })
   
@@ -196,6 +195,127 @@ server <- function(input, output, session) {
                        position = "topright") %>% 
       addLegend("bottomleft", pal = col_nr, values = ~cluster,
                 title = "NR Group", opacity = 1) 
+  })
+  
+  # Human Development Index
+  
+  locations_hdi <- reactive({
+    locations_hdi <- select(locations(), c("city", "education", "income",
+                                          "occupation", "health_status", "housing",
+                                          "latitude", "longitude"))
+    locations_hdi
+  })
+  
+  output$dist2 <- renderUI({
+    selectInput("tab2_dist", label = "Distribution Indicator",
+                choices = c("education", 
+                            "income",
+                            "occupation", 
+                            "health_status", 
+                            "housing"),
+                selected = "education")
+  })
+  
+  output$distplt2 <- renderPlotly({
+    req(input$tab2_dist)
+    locations_hdi() %>%
+      plot_ly(
+        y = as.formula(paste0('~', input$tab2_dist)),
+        type = 'violin',
+        box = list(visible = T),meanline = list(visible = T), x0 = paste0(input$tab2_dist)) %>%
+      layout(
+        yaxis = list(title = "%", zeroline = F))
+  })
+  
+  locations_hdi_scale <- reactive({
+    hdi_scale <- scale(select(locations_hdi(),
+                             c("education", "income",
+                               "occupation", "health_status", 
+                               "housing")))
+    hdi_scale 
+  })
+  
+  locations_hdi_cluster <- reactive({
+    req(input$clustnum2)
+    locations_hdi_cluster <- kmeans(locations_hdi_scale(), 
+                                   centers = input$clustnum2, nstart = 25)
+    locations_hdi_cluster
+  })
+  
+  output$clustplt2 <- renderPlotly({
+    ggplotly(fviz_cluster(locations_hdi_cluster(), data = locations_hdi_scale()) +
+               theme_minimal() +
+               theme(legend.position = "none") +
+               ggtitle(""))
+  })
+  
+  hdi_clust_df <- reactive({
+    locations_hdi_update <- locations_hdi()
+    locations_hdi_update$cluster <- as.factor(locations_hdi_cluster()$cluster)
+    locations_hdi_update
+  })
+  
+  hdi_clust_table <- reactive({
+    hdi_clust <- select(hdi_clust_df(), c("education", "income",
+                                        "occupation", "health_status", 
+                                        "housing"))
+    hdi_clust_table <- aggregate(hdi_clust,
+                                by=list(cluster= locations_hdi_cluster()$cluster),
+                                mean)
+    hdi_clust_table[,-1] <- round(hdi_clust_table[,-1],1)
+    hdi_clust_table
+  })
+  
+  output$clustTbl2 <- renderDataTable(
+    DT::datatable(hdi_clust_table(),
+                  rownames = T,
+                  options = list(pageLength = 5, scrollX = TRUE, info = FALSE))
+    
+  )
+  
+  output$clustbar2 <- renderPlotly({
+    ggplotly(hdi_clust_df() %>%
+               group_by(cluster) %>%
+               summarise(No_of_Cities = n()) %>%
+               arrange(No_of_Cities) %>%
+               mutate(Cluster = factor(cluster, levels = unique(cluster))) %>%
+               ggplot(aes(x = Cluster, y = No_of_Cities)) +
+               geom_bar(stat = "identity",
+                        fill = "#1f77b4") +
+               geom_text(aes(label = No_of_Cities),
+                         vjust = -0.25) +
+               coord_flip() +
+               labs(x = "Group", 
+                    y = "Number of Cities/Towns") +
+               theme_minimal())
+  })
+  
+  output$clust_hdi <- renderLeaflet({
+    col_hdi <- colorFactor("Set1", hdi_clust_df()$cluster)
+    
+    leaflet(data = hdi_clust_df()) %>% 
+      addTiles(group = "OSM") %>% 
+      addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
+      addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
+      addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
+      addCircleMarkers(~longitude, ~latitude, color = ~col_hdi(cluster),
+                       stroke = FALSE,
+                       fillOpacity = 1, radius = 10,
+                       popup = popupTable(hdi_clust_df(),
+                                          zcol = c("city",
+                                                   "education",
+                                                   "income",
+                                                   "occupation",
+                                                   "health_status",
+                                                   "housing",
+                                                   "cluster")), 
+                       group = "Human Development Index") %>% 
+      addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
+                                      "CartoDB.DarkMatter"),
+                       overlayGroups = c("Human Development Index"),
+                       position = "topright") %>% 
+      addLegend("bottomleft", pal = col_hdi, values = ~cluster,
+                title = "HDI Group", opacity = 1) 
   })
   
 }
