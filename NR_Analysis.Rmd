@@ -248,9 +248,9 @@ library(leafpop)
 
 
 ```{r warning=FALSE, message=FALSE}
-col_nr <- colorFactor("Set1", locations_hdi$Cluster)
+col_nr <- colorFactor("Set1", locations_nr$Cluster)
 
-leaflet(data = locations_hdi) %>% 
+leaflet(data = locations_nr) %>% 
   addTiles(group = "OSM") %>% 
   addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
   addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
@@ -258,13 +258,13 @@ leaflet(data = locations_hdi) %>%
   addCircleMarkers(~longitude, ~latitude, color = ~col_nr(Cluster),
                    stroke = FALSE,
                    fillOpacity = 1, radius = 10,
-                   popup = popupTable(locations_hdi,
+                   popup = popupTable(locations_nr,
                                       zcol = c("City",
-                                               "Education",
-                                               "Income",
-                                               "Occupation",
-                                               "Health Status",
-                                               "Housing",
+                                               "Availability of Water",
+                                               "Agricultural Potential",
+                                               "Mining Potential",
+                                               "Tourism Potential",
+                                               "Environmental Sensitivity",
                                                "Cluster")), 
                    group = "Natural Resource") %>% 
   addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
@@ -272,12 +272,12 @@ leaflet(data = locations_hdi) %>%
                    overlayGroups = c("Natural Resource"),
                    position = "topright") %>% 
   addLegend("bottomleft", pal = col_nr, values = ~Cluster,
-            title = "HDI Cluster", opacity = 1) 
+            title = "NR Cluster", opacity = 1)
 ```
 
 
 ```{r warning=FALSE, message=FALSE}
-
+ 
 ```
 
 

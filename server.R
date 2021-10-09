@@ -79,15 +79,123 @@ server <- function(input, output, session) {
   # Natural Resources 
   
   locations_nr <- reactive({
-    locations_nr <- select(data(), c("city", "availability_of_water", "agricultural_potential",
+    locations_nr <- select(locations(), c("city", "availability_of_water", "agricultural_potential",
                                    "mining_potential", "tourism_potential", "environmental_sensitivity",
                                    "latitude", "longitude"))
     locations_nr
   })
   
   output$dist1 <- renderUI({
-    varSelectInput("tab1_dist", label = "Distribution Indicator",
-                   locations_nr()[, c(2:6)],
+    selectInput("tab1_dist", label = "Distribution Indicator",
+                   choices = c("availability_of_water", 
+                               "agricultural_potential",
+                               "mining_potential", 
+                               "tourism_potential", 
+                               "environmental_sensitivity"),
                    selected = "availability_of_water")
   })
+  
+  output$distplt1 <- renderPlotly({
+    req(input$tab1_dist)
+    locations_nr() %>%
+      plot_ly(
+        y = as.formula(paste0('~', input$tab1_dist)),
+        type = 'violin',
+        box = list(visible = T),meanline = list(visible = T), x0 = paste0(input$tab1_dist)) %>%
+      layout(
+        yaxis = list(title = "%", zeroline = F))
+  })
+  
+  locations_nr_scale <- reactive({
+    nr_scale <- scale(select(locations_nr(),
+                             c("availability_of_water", "agricultural_potential",
+                               "mining_potential", "tourism_potential", 
+                               "environmental_sensitivity")))
+    nr_scale 
+  })
+  
+  locations_nr_cluster <- reactive({
+    req(input$clustnum1)
+    locations_nr_cluster <- kmeans(locations_nr_scale(), 
+                                   centers = input$clustnum1, nstart = 25)
+    locations_nr_cluster
+  })
+  
+  output$clustplt1 <- renderPlotly({
+    ggplotly(fviz_cluster(locations_nr_cluster(), data = locations_nr_scale()) +
+               theme_minimal() +
+               theme(legend.position = "none") +
+               ggtitle("Natural Resource Clusters (Groups)"))
+  })
+  
+  nr_clust_df <- reactive({
+    locations_nr_update <- locations_nr()
+    locations_nr_update$cluster <- as.factor(locations_nr_cluster()$cluster)
+    locations_nr_update
+  })
+  
+  nr_clust_table <- reactive({
+    nr_clust <- select(nr_clust_df(), c("availability_of_water", "agricultural_potential",
+                                         "mining_potential", "tourism_potential", 
+                                         "environmental_sensitivity"))
+    nr_clust_table <- aggregate(nr_clust,
+                                by=list(cluster= locations_nr_cluster()$cluster),
+                                mean)
+    nr_clust_table[,-1] <-round(nr_clust_table[,-1],1)
+    nr_clust_table
+  })
+  
+  output$clustTbl1 <- renderDataTable(
+    DT::datatable(nr_clust_table(),
+                  rownames = T,
+                  options = list(pageLength = 5, scrollX = TRUE, info = FALSE))
+    
+  )
+  
+  output$clustbar1 <- renderPlotly({
+    ggplotly(nr_clust_df() %>%
+               group_by(cluster) %>%
+               summarise(No_of_Cities = n()) %>%
+               arrange(No_of_Cities) %>%
+               mutate(Cluster = factor(cluster, levels = unique(cluster))) %>%
+               ggplot(aes(x = Cluster, y = No_of_Cities)) +
+               geom_bar(stat = "identity",
+                        fill = "#1f77b4") +
+               geom_text(aes(label = No_of_Cities),
+                         vjust = -0.25) +
+               coord_flip() +
+               labs(x = "Group", 
+                    y = "Number of Cities/Towns",
+                    title = "Natural Resource Grouping (Clusters)") +
+               theme_minimal())
+  })
+  
+  output$clust_nr <- renderLeaflet({
+    col_nr <- colorFactor("Set1", nr_clust_df()$cluster)
+    
+    leaflet(data = nr_clust_df()) %>% 
+      addTiles(group = "OSM") %>% 
+      addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
+      addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
+      addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
+      addCircleMarkers(~longitude, ~latitude, color = ~col_nr(cluster),
+                       stroke = FALSE,
+                       fillOpacity = 1, radius = 10,
+                       popup = popupTable(nr_clust_df(),
+                                          zcol = c("city",
+                                                   "availability_of_water",
+                                                   "agricultural_potential",
+                                                   "mining_potential",
+                                                   "tourism_potential",
+                                                   "environmental_sensitivity",
+                                                   "cluster")), 
+                       group = "Natural Resource") %>% 
+      addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
+                                      "CartoDB.DarkMatter"),
+                       overlayGroups = c("Natural Resource"),
+                       position = "topright") %>% 
+      addLegend("bottomleft", pal = col_nr, values = ~cluster,
+                title = "NR Group", opacity = 1) 
+  })
+  
 }

@@ -250,13 +250,13 @@ ggplotly(locations_hdi %>%
 ### Viewing Mapview according to clusters
 - SF object of cluster data for Human Development Index
 ```{r warning=FALSE, message=FALSE}
-Human_Development <- st_as_sf(locations_hdi, coords = c("longitude", "latitude"), crs = 4326)
+# Human_Development <- st_as_sf(locations_hdi, coords = c("longitude", "latitude"), crs = 4326)
 ```
 
 - Kimberley outlier Education level makes sense, especially since Kimberley is the provincial (Northern Cape) capital  
 ```{r warning=FALSE, message=FALSE}
-mapview(Human_Development, 
-        zcol = "Cluster")
+# mapview(Human_Development, 
+#         zcol = "Cluster")
 ```
 
 
@@ -267,31 +267,31 @@ library(leafpop)
 
 
 ```{r warning=FALSE, message=FALSE}
-col_nr <- colorFactor("Set1", locations_nr$Cluster)
+col_hdi <- colorFactor("Set1", locations_hdi$Cluster)
 
-leaflet(data = locations_nr) %>% 
+leaflet(data = locations_hdi) %>% 
   addTiles(group = "OSM") %>% 
   addProviderTiles(providers$OpenTopoMap, group = "OpenTopoMap") %>% 
   addProviderTiles(providers$Esri.WorldImagery, group = "Esri.WorldImagery") %>% 
   addProviderTiles(providers$CartoDB.DarkMatter, group = "CartoDB.DarkMatter") %>% 
-  addCircleMarkers(~longitude, ~latitude, color = ~col_nr(Cluster),
+  addCircleMarkers(~longitude, ~latitude, color = ~col_hdi(Cluster),
                    stroke = FALSE,
                    fillOpacity = 1, radius = 10,
-                   popup = popupTable(locations_nr,
+                   popup = popupTable(locations_hdi,
                                       zcol = c("City",
-                                               "Availability of Water",
-                                               "Agricultural Potential",
-                                               "Mining Potential",
-                                               "Tourism Potential",
-                                               "Environmental Sensitivity",
+                                               "Education",
+                                               "Income",
+                                               "Occupation",
+                                               "Health Status",
+                                               "Housing",
                                                "Cluster")), 
                    group = "Natural Resource") %>% 
   addLayersControl(baseGroups = c("OSM", "OpenTopoMap", "Esri.WorldImagery",
                                   "CartoDB.DarkMatter"),
                    overlayGroups = c("Natural Resource"),
                    position = "topright") %>% 
-  addLegend("bottomleft", pal = col_nr, values = ~Cluster,
-            title = "NR Cluster", opacity = 1) 
+  addLegend("bottomleft", pal = col_hdi, values = ~Cluster,
+            title = "HDI Cluster", opacity = 1) 
 ```
 
 

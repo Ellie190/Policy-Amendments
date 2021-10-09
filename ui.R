@@ -8,6 +8,7 @@ library(leaflet)
 library(plotly)
 library(DT)
 library(leafpop)
+library(factoextra)
 
 dashboardPage(
   fullscreen = TRUE,
@@ -87,7 +88,7 @@ dashboardPage(
                                 tabPanel("Group Table",
                                          dataTableOutput("clustTbl1")),
                                 tabPanel("Group Count",
-                                         dataTableOutput("clustbar1"))))
+                                         plotlyOutput("clustbar1"))))
                 )
               )),
       tabItem("hdi",
@@ -97,7 +98,7 @@ dashboardPage(
                          box(title = "View Card", status = "warning",
                              width = 12, solidHeader = FALSE, elevation = 5,
                              uiOutput("dist2"),
-                             numericInput("clustnum1", "Enter Number of Groups",
+                             numericInput("clustnum2", "Enter Number of Groups",
                                           value = 7,
                                           min = 2, max = 8,
                                           width = "auto"))),
@@ -121,7 +122,7 @@ dashboardPage(
                                 tabPanel("Group Table",
                                          dataTableOutput("clustTbl2")),
                                 tabPanel("Group Count",
-                                         dataTableOutput("clustbar2"))))
+                                         plotlyOutput("clustbar2"))))
                 )
               ))
     ) # end of tabItems 
