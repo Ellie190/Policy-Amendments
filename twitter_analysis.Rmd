@@ -106,7 +106,7 @@ st %>% select(contains("coords")) %>%
 - Using a circle to indicate location of tweets
 ```{r}
 data_prepared <- tibble(
-  location = geocode_EK("South Africa",500)
+  location = geocode_ES("South Africa",500)
 ) %>% 
   separate(location, into = c("lat", "lon", "distance"), sep = ",", remove = FALSE) %>% 
   mutate(distance = distance %>% str_remove_all("[^0-9.-]")) %>% 
