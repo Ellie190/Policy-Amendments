@@ -318,4 +318,39 @@ server <- function(input, output, session) {
                 title = "HDI Group", opacity = 1) 
   })
   
+  # Twitter Analysis
+  
+  # create token named "twitter_token"
+  # token <- create_token(
+  #   app = Sys.getenv("app"),
+  #   consumer_key = Sys.getenv("key"),
+  #   consumer_secret = Sys.getenv("secret"),
+  #   access_token = Sys.getenv("access_token"),
+  #   access_secret = Sys.getenv("access_secret")
+  # )
+  
+  output$tweet_prox <- renderLeaflet({
+    
+    geocode_ES <- function(loc, mil) {
+      geo_loc <- tidygeocoder::geo(loc, method = 'osm', lat = latitude, long = longitude)
+      paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
+             paste0(mil, "mi"))
+      
+    }
+    data_prepared <- tibble(
+      location = geocode_ES(input$location,input$n_miles)
+    ) %>% 
+      separate(location, into = c("lat", "lon", "distance"), sep = ",", remove = FALSE) %>% 
+      mutate(distance = distance %>% str_remove_all("[^0-9.-]")) %>% 
+      mutate_at(.vars = vars(-location),as.numeric)
+    
+    data_prepared %>% 
+      leaflet() %>% 
+      setView(data_prepared$lon, data_prepared$lat, zoom = 4) %>% 
+      addTiles() %>% 
+      addMarkers(~lon, ~lat, popup = ~as.character(location), label = ~as.character(location)) %>% 
+      addCircles(lng = ~lon, lat = ~lat, weight = 1, radius = ~distance/0.000621371)
+  })
+  
+  
 }

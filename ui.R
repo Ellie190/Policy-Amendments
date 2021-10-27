@@ -9,6 +9,12 @@ library(plotly)
 library(DT)
 library(leafpop)
 library(factoextra)
+library(rtweet)
+# library(tidytext)
+# library(ggwordcloud)
+library(tidyverse)
+
+
 
 dashboardPage(
   fullscreen = TRUE,
@@ -95,7 +101,7 @@ dashboardPage(
                                 tabPanel("NR Group Count", icon = icon("chart-bar"),
                                          plotlyOutput("clustbar1"))))
                 )
-              )),
+              )), # end of nr tab
       tabItem("hdi",
               fluidPage(
                 fluidRow(
@@ -109,31 +115,71 @@ dashboardPage(
                                           min = 2, max = 8,
                                           width = "auto"))),
                   column(4,
-                         box(title = "Indicator Distribution", status = "teal",
+                         box(title = "Indicator Distribution", status = "lightblue",
                              icon = icon("chart-area"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
                              plotlyOutput("distplt2"))),
                   column(5,
-                         box(title = "Human Development City Groups", status = "teal",
+                         box(title = "Human Development City Groups", status = "lightblue",
                              icon = icon("object-group"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
                              plotlyOutput("clustplt2")))
                 ),
                 fluidRow(
                   column(6,
-                         box(title = "City Group Mapping", status = "teal",
+                         box(title = "City Group Mapping", status = "lightblue",
                              icon = icon("map-marked-alt"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
                              leafletOutput("clust_hdi"))),
                   column(6,
                          tabBox(maximizable = TRUE, width = 12,
-                                solidHeader = FALSE, status = "teal",
+                                solidHeader = FALSE, status = "lightblue",
                                 tabPanel("Group Table", icon = icon("table"),
                                          dataTableOutput("clustTbl2")),
                                 tabPanel("HDI Group Count", icon = icon("chart-bar"),
                                          plotlyOutput("clustbar2"))))
                 )
-              ))
+              )
+              ), # end of hdi tab
+      tabItem("pi",
+              fluidPage(
+                fluidRow(
+                  column(5,
+                         box(title = "Query Box", status = "white",
+                             icon = icon("search"), elevation = 5,
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             textInput(inputId = "query", label = "Topic/ Hashtag", value = "#covid19"),
+                             sliderInput(
+                               inputId = "n_tweets",
+                               label = "Number of tweets:",
+                               min = 1,
+                               max = 2000,
+                               value = 10),
+                             textInput(inputId = "location", label = "Location", value = "South Africa"),
+                             sliderInput(
+                               inputId = "n_miles",
+                               label = "Twitter Search Radius (miles)",
+                               min = 1,
+                               max = 2000,
+                               value = 500))),
+                  column(7,
+                         box(title = "Tweet Proximity", status = "white",
+                             icon = icon("map-marked-alt"),
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             leafletOutput("tweet_prox"))),
+),
+                fluidRow(
+                  column(6,
+                         box(title = "Sentiment Polarity", status = "white",
+                             icon = icon("users"),
+                             width = 12, solidHeader = TRUE, maximizable = TRUE)),
+                  column(6,
+                         box(title = "Feedback", status = "white",
+                             icon = icon("comments"),
+                             width = 12, solidHeader = TRUE, maximizable = TRUE))
+                )
+              )
+              ) # end of pi tab
     ) # end of tabItems 
   ) # end of body
 ) # end of Page 

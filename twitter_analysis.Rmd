@@ -1,0 +1,375 @@
+---
+title: "twitter analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+  )
+```
+
+#### Libraries
+```{r}
+library(rtweet)
+library(dplyr)
+library(tidygeocoder) # for geocoding data
+library(ggmap) 
+
+# Interactive Maps
+library(tmaptools)
+library(leaflet)
+
+#Visualization
+library(plotly)
+library(ggwordcloud)
+library(wordcloud)
+
+#Core
+library(tidyverse)
+
+# Text
+library(tidytext)
+library(textdata)
+
+# Core
+library(tidyverse)
+library(tidyquant)
+```
+
+
+#### 1. Account setup
+
+```{r}
+  
+# create token named "twitter_token"
+twitter_token <- create_token(
+  app = Sys.getenv("app"),
+  consumer_key = Sys.getenv("key"),
+  consumer_secret = Sys.getenv("secret"),
+  access_token = Sys.getenv("access_token"),
+  access_secret = Sys.getenv("access_secret")
+  )
+
+```
+
+
+#### Geocode Function
+```{r}
+geocode_ES <- function(loc, mil) {
+  geo_loc <- tidygeocoder::geo(loc, method = 'osm', lat = latitude, long = longitude)
+  paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
+         paste0(mil, "mi"))
+  
+}
+```
+
+#### Tweet Search
+```{r}
+st <- search_tweets(
+  q = "covid19",
+  n =10,
+  include_rts = FALSE,
+  lang = "en",
+  geocode = geocode_ES("South Africa", 500)
+)
+```
+
+
+#### Data Analysis
+```{r}
+
+st %>% glimpse()
+
+st %>% select(contains("coords")) %>% 
+  unnest_wider(geo_coords) %>% 
+  filter(!is.na(...1))
+  
+# geo_data <- st %>%
+#   tidygeocoder::geocode(location, method = 'osm', lat = latitude, long = longitude)
+# 
+# geo_data %>% glimpse()
+
+# geo_data %>% slice(1:5) %>% select(screen_name,location,description)
+
+# View(geo_data)
+
+```
+
+
+
+
+#### Mapping tweets
+
+- Using a circle to indicate location of tweets
+```{r}
+data_prepared <- tibble(
+  location = geocode_EK("South Africa",500)
+) %>% 
+  separate(location, into = c("lat", "lon", "distance"), sep = ",", remove = FALSE) %>% 
+  mutate(distance = distance %>% str_remove_all("[^0-9.-]")) %>% 
+  mutate_at(.vars = vars(-location),as.numeric)
+
+
+data_prepared %>% 
+  leaflet() %>% 
+  setView(data_prepared$lon, data_prepared$lat, zoom = 4) %>% 
+  addTiles() %>% 
+  addMarkers(~lon, ~lat, popup = ~as.character(location), label = ~as.character(location)) %>% 
+  addCircles(lng = ~lon, lat = ~lat, weight = 1, radius = ~distance/0.000621371)
+
+```
+
+
+#### Tidy data - get frequency
+```{r}
+tweets_tokenized_tbl <- st %>% 
+  select(text) %>% 
+  rowid_to_column() %>% 
+  unnest_tokens(word, text)
+
+tweets_tokenized_tbl
+
+tweets_tokenized_tbl %>% count(word, sort = TRUE)
+
+```
+
+
+#### Sentiment analysis
+- Sentiment dictionaries
+```{r}
+
+get_sentiments(lexicon = "bing") # Categorical Positive / Negative
+
+get_sentiments(lexicon = "afinn") # Assign polarity
+
+
+```
+
+
+Joining sentiment dictionaries with tokenized text
+```{r}
+
+sentiment_bin_tbl <- tweets_tokenized_tbl %>% 
+  inner_join(get_sentiments("bing"))
+
+```
+
+Measuring sentiment
+
+```{r}
+# Overall sentiment
+sentiment_bin_tbl %>% count(sentiment)
+sentiment_bin_tbl$word
+
+#Sentiment by user
+Sentiment_by_row_id_tbl <- sentiment_bin_tbl %>% 
+  select(-word) %>% 
+  count(rowid, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = list(n = 0)) %>% 
+  mutate(sentiment = positive - negative) %>% 
+  left_join(
+    st %>% select(screen_name, text) %>% rowid_to_column()
+  )
+
+```
+
+
+Polarity visualization
+```{r}
+label_wrap <- label_wrap_gen(width = 60)
+
+data_formatted <- Sentiment_by_row_id_tbl %>% 
+  mutate(text_formatted = str_glue("Row ID: {rowid}
+                                    Screen Name: {screen_name}
+                                   Text: {label_wrap(text)}"))
+
+g <- data_formatted %>% 
+  ggplot(aes(rowid,sentiment)) + 
+  geom_line(color = "#2c3e50", alpha = 0.5) +
+  geom_point(aes(text = text_formatted), color = "#2c3e50") +
+  geom_hline(aes(yintercept = mean(sentiment)), color ="blue") +
+  geom_hline(aes(yintercept = median(sentiment) + 1.96*IQR(sentiment)), color = "red") +
+  geom_hline(aes(yintercept = median(sentiment) - 1.96*IQR(sentiment)), color = "red") +
+  theme_tq() +
+  labs(title = "Sentiment Polarity", x = "Twitter user", y = "Sentiment")
+
+ggplotly(g, tooltip = "text") %>% 
+  layout(
+    xaxis = list(rangeslider = list(type = "date")
+    )
+  )
+ 
+```
+
+
+
+#### Wordcloud
+
+```{r}
+sentiment_by_word_tbl <- sentiment_bin_tbl %>% 
+  count(word, sentiment, sort = TRUE)
+
+sentiment_by_word_tbl %>% 
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = list(n = 0)) %>% 
+  column_to_rownames(var = "word") %>% 
+  comparison.cloud(
+    colors = palette_light()
+  )
+
+
+```
+
+
+
+```{r}
+sentiment_by_word_tbl %>% 
+  slice(1:100) %>% 
+  mutate(sentiment = factor(sentiment,levels = c("positive","negative"))) %>% 
+  ggplot(aes(label = word, color =sentiment, size =n)) +
+  geom_text_wordcloud_area() +
+  facet_wrap(~sentiment, ncol = 2) +
+  theme_tq() +
+  scale_color_tq() +
+  scale_size_area(max_size = 16) +
+  labs(title = "Sentiment Word Frequency")
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+# latest devel version
+devtools::install_github("RinteRface/bs4Dash")
+
+```
+
+
+
+
+```{r pressure, echo=FALSE}
+
+
+# 3. Stream tweets
+# Real time twitter  action
+
+#rt <- stream_tweets(timeout = 5)
+#rt %>% glimpse()
+
+# 4. Geocoding filters
+lookup_coords("london, uk")
+
+geocode_EK <- function(loc, mil) {
+  geo_loc <- tidygeocoder::geo(loc, method = 'osm', lat = latitude, long = longitude)
+  paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
+         paste0(mil, "mi"))
+  
+}
+
+kim <- geocode_EK("Kimberley, Northern Cape", 100)
+
+rt <- stream_tweets(lookup_coords("za"), timeout = 5)
+
+rt <- stream_tweets("elections", timeout = 5)
+
+rt
+rt %>% glimpse()
+
+
+# Apply search tweets
+
+
+st <- search_tweets(
+  q = "#covid19",
+  n =300,
+  include_rts = FALSE,
+  lang = "en",
+  geocode = geocode_EK("london, uk", 0), timeout = 5
+)
+
+st %>% glimpse()
+  
+geo_data <- tweets_covid %>%
+  tidygeocoder::geocode(location, method = 'osm', lat = latitude, long = longitude)
+
+geo_data %>% slice(1:5) %>% select(screen_name,location,description)
+
+View(geo_data)
+
+write.csv(geo_data, "geo_NCdata.csv") # comment after saving to avoid overwrite
+
+
+
+
+
+library(tidygeocoder)
+
+
+
+
+
+
+
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
