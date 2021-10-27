@@ -321,13 +321,13 @@ server <- function(input, output, session) {
   # Twitter Analysis
   
   # create token named "twitter_token"
-  # token <- create_token(
-  #   app = Sys.getenv("app"),
-  #   consumer_key = Sys.getenv("key"),
-  #   consumer_secret = Sys.getenv("secret"),
-  #   access_token = Sys.getenv("access_token"),
-  #   access_secret = Sys.getenv("access_secret")
-  # )
+  token <- create_token(
+    app = Sys.getenv("app"),
+    consumer_key = Sys.getenv("key"),
+    consumer_secret = Sys.getenv("secret"),
+    access_token = Sys.getenv("access_token"),
+    access_secret = Sys.getenv("access_secret")
+  )
   
   rv <- reactiveValues()
   
@@ -339,6 +339,22 @@ server <- function(input, output, session) {
       }
     
     rv$geocode <- geocode_ES(input$location,input$n_miles)
+    
+    rv$data <- search_tweets(
+      q = input$query,
+      n = input$n_tweets,
+      include_rts = FALSE,
+      geocode = rv$geocode,
+      langs = "en",
+      token = token
+    )
+    
+    rv$tweet_sentiment <- rv$data %>% 
+      select(text) %>% 
+      rowid_to_column() %>% 
+      unnest_tokens(word, text) %>% 
+      inner_join(get_sentiments("bing"))
+    
   }, ignoreNULL = FALSE)
   
   output$tweet_prox <- renderLeaflet({
@@ -358,5 +374,48 @@ server <- function(input, output, session) {
       addCircles(lng = ~lon, lat = ~lat, weight = 1, radius = ~distance/0.000621371)
   })
   
+  output$sent_plt <- renderPlotly({
+
+    #Sentiment by user
+    Sentiment_by_row_id_tbl <- rv$tweet_sentiment %>% 
+      select(-word) %>% 
+      count(rowid, sentiment) %>%
+      pivot_wider(names_from = sentiment, values_from = n, values_fill = list(n = 0)) %>% 
+      mutate(sentiment = positive - negative) %>% 
+      left_join(
+        rv$data %>% select(screen_name, text) %>% rowid_to_column()
+      )
+    
+    label_wrap <- label_wrap_gen(width = 60)
+    
+    data_formatted <- Sentiment_by_row_id_tbl %>% 
+      mutate(text_formatted = str_glue("Row ID: {rowid}
+                                    Screen Name: {screen_name}
+                                   Text: {label_wrap(text)}"))
+    
+    g <- data_formatted %>% 
+      ggplot(aes(rowid,sentiment)) + 
+      geom_line(color = "#2c3e50", alpha = 0.5) +
+      geom_point(aes(text = text_formatted), color = "#2c3e50") +
+      geom_hline(aes(yintercept = mean(sentiment)), color ="blue") +
+      geom_hline(aes(yintercept = median(sentiment) + 1.96*IQR(sentiment)), color = "red") +
+      geom_hline(aes(yintercept = median(sentiment) - 1.96*IQR(sentiment)), color = "red") +
+      theme_light() +
+      labs(title = "", x = "Twitter user", y = "Sentiment")
+    
+    ggplotly(g, tooltip = "text") %>% 
+      layout(
+        xaxis = list(rangeslider = list(type = "date")
+        )
+      )
+  })
+  
+  output$test_tbl <- renderDataTable({
+    DT::datatable(rv$tweet_sentiment,
+                  rownames = T,
+                  options = list(pageLength = 5, scrollX = TRUE, info = FALSE))
+
+  })
+  # dataTableOutput("test_tbl")
   
 }

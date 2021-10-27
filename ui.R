@@ -10,7 +10,7 @@ library(DT)
 library(leafpop)
 library(factoextra)
 library(rtweet)
-# library(tidytext)
+library(tidytext)
 # library(ggwordcloud)
 library(tidyverse)
 
@@ -173,11 +173,13 @@ dashboardPage(
                   column(6,
                          box(title = "Sentiment Polarity", status = "white",
                              icon = icon("users"),
-                             width = 12, solidHeader = TRUE, maximizable = TRUE)),
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                            plotlyOutput("sent_plt"))),
                   column(6,
                          box(title = "Feedback", status = "white",
                              icon = icon("comments"),
-                             width = 12, solidHeader = TRUE, maximizable = TRUE))
+                             width = 12, solidHeader = TRUE, maximizable = TRUE,
+                             dataTableOutput("test_tbl")))
                 )
               )
               ) # end of pi tab
