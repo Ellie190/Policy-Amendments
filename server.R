@@ -329,16 +329,22 @@ server <- function(input, output, session) {
   #   access_secret = Sys.getenv("access_secret")
   # )
   
-  output$tweet_prox <- renderLeaflet({
-    
+  rv <- reactiveValues()
+  
+  observeEvent(input$submit, {
     geocode_ES <- function(loc, mil) {
       geo_loc <- tidygeocoder::geo(loc, method = 'osm', lat = latitude, long = longitude)
       paste0(paste0(paste0(geo_loc$latitude[1], ","), paste0(geo_loc$longitude[1], ",")),
              paste0(mil, "mi"))
-      
-    }
+      }
+    
+    rv$geocode <- geocode_ES(input$location,input$n_miles)
+  }, ignoreNULL = FALSE)
+  
+  output$tweet_prox <- renderLeaflet({
+    
     data_prepared <- tibble(
-      location = geocode_ES(input$location,input$n_miles)
+      location = rv$geocode 
     ) %>% 
       separate(location, into = c("lat", "lon", "distance"), sep = ",", remove = FALSE) %>% 
       mutate(distance = distance %>% str_remove_all("[^0-9.-]")) %>% 
