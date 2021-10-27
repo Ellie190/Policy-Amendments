@@ -11,8 +11,10 @@ library(leafpop)
 library(factoextra)
 library(rtweet)
 library(tidytext)
-# library(ggwordcloud)
+library(ggwordcloud)
+library(tidyquant)
 library(tidyverse)
+
 
 
 
@@ -164,7 +166,7 @@ dashboardPage(
                                value = 500),
                              actionButton(inputId = "submit", "Submit Query", status = "warning"))),
                   column(7,
-                         box(title = "Tweet Proximity", status = "white",
+                         box(title = "Tweet Proximity: Search Radius", status = "white",
                              icon = icon("map-marked-alt"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
                              leafletOutput("tweet_prox"))),
@@ -176,10 +178,10 @@ dashboardPage(
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
                             plotlyOutput("sent_plt"))),
                   column(6,
-                         box(title = "Feedback", status = "white",
+                         box(title = "Feedback: Sentiment Word Cloud", status = "white",
                              icon = icon("comments"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
-                             dataTableOutput("test_tbl")))
+                             plotOutput("word_plt")))
                 )
               )
               ) # end of pi tab

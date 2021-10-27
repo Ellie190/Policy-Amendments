@@ -51,7 +51,7 @@ server <- function(input, output, session) {
                                         "CartoDB.DarkMatter"),
                          overlayGroups = c("NR & HDI Amount"),
                          position = "topright") %>% 
-        addLegend("bottomleft", pal = col_nr, values = ~natural_resources,
+        leaflet::addLegend("bottomleft", pal = col_nr, values = ~natural_resources,
                   title = "Natural Resource %", opacity = 1) 
     } else {
       col_hdi <- colorNumeric("RdYlBu", locations()$human_development_index)
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
                                         "CartoDB.DarkMatter"),
                          overlayGroups = c("NR & HDI Amount"),
                          position = "topright") %>% 
-        addLegend("bottomleft", pal = col_hdi, values = ~human_development_index,
+        leaflet::addLegend("bottomleft", pal = col_hdi, values = ~human_development_index,
                   title = "Human Development Index %", opacity = 1) 
     } })
   
@@ -193,7 +193,7 @@ server <- function(input, output, session) {
                                       "CartoDB.DarkMatter"),
                        overlayGroups = c("Natural Resource"),
                        position = "topright") %>% 
-      addLegend("bottomleft", pal = col_nr, values = ~cluster,
+      leaflet::addLegend("bottomleft", pal = col_nr, values = ~cluster,
                 title = "NR Group", opacity = 1) 
   })
   
@@ -314,7 +314,7 @@ server <- function(input, output, session) {
                                       "CartoDB.DarkMatter"),
                        overlayGroups = c("Human Development Index"),
                        position = "topright") %>% 
-      addLegend("bottomleft", pal = col_hdi, values = ~cluster,
+      leaflet::addLegend("bottomleft", pal = col_hdi, values = ~cluster,
                 title = "HDI Group", opacity = 1) 
   })
   
@@ -400,7 +400,7 @@ server <- function(input, output, session) {
       geom_hline(aes(yintercept = mean(sentiment)), color ="blue") +
       geom_hline(aes(yintercept = median(sentiment) + 1.96*IQR(sentiment)), color = "red") +
       geom_hline(aes(yintercept = median(sentiment) - 1.96*IQR(sentiment)), color = "red") +
-      theme_light() +
+      theme_tq() +
       labs(title = "", x = "Twitter user", y = "Sentiment")
     
     ggplotly(g, tooltip = "text") %>% 
@@ -410,12 +410,27 @@ server <- function(input, output, session) {
       )
   })
   
-  output$test_tbl <- renderDataTable({
-    DT::datatable(rv$tweet_sentiment,
-                  rownames = T,
-                  options = list(pageLength = 5, scrollX = TRUE, info = FALSE))
-
+  output$word_plt <- renderPlot({
+    sentiment_by_word_tbl <- rv$tweet_sentiment %>% 
+      count(word, sentiment, sort = TRUE)
+    
+    sentiment_by_word_tbl %>% 
+      slice(1:100) %>% 
+      mutate(sentiment = factor(sentiment,levels = c("positive","negative"))) %>% 
+      ggplot(aes(label = word, color =sentiment, size =n)) +
+      geom_text_wordcloud_area() +
+      facet_wrap(~sentiment, ncol = 2) +
+      theme_tq() +
+      scale_color_tq() +
+      scale_size_area(max_size = 16)
   })
+  
+  # output$test_tbl <- renderDataTable({
+  #   DT::datatable(rv$tweet_sentiment,
+  #                 rownames = T,
+  #                 options = list(pageLength = 5, scrollX = TRUE, info = FALSE))
+  # 
+  # })
   # dataTableOutput("test_tbl")
   
 }
