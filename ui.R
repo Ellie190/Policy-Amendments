@@ -14,12 +14,13 @@ library(tidytext)
 library(ggwordcloud)
 library(tidyquant)
 library(tidyverse)
-library(markdown)
+library(waiter)
 
 
 
 
 dashboardPage(
+  preloader = list(html = tagList(spin_1(), "Loading ..."), color = "#18191A"),
   fullscreen = TRUE,
   help = TRUE,
   dashboardHeader(
@@ -187,7 +188,7 @@ dashboardPage(
               ), # end of pi tab
       tabItem("di",
               fluidPage(
-                titlePanel("Natural Resource and Human Development Information")
+                titlePanel("Natural Resource and Human Development Information (Pending...)")
               ))
 
     ) # end of tabItems 
