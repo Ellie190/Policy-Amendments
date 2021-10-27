@@ -1,0 +1,14 @@
+name: Policy-Amendments
+title: Policy-Amendments
+username:
+account: eli2
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4974497
+bundleId: 5181582
+url: https://eli2.shinyapps.io/Policy-Amendments/
+when: 1635316336.09111
+lastSyncTime: 1635316336.09111
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|.Renviron|Analysis.html|Analysis.Rmd|app.R|DDDM1.png|DDDM2.png|geo_NCdata.csv|geocode_function.R|hd_policy.jpg|HDI_Analysis.html|HDI_Analysis.Rmd|LICENSE|logo.png|NCdata.xlsx|NR&HDI_Amount.Rmd|NR_Analysis.html|NR_Analysis.Rmd|nr_policy.jpg|README.md|requirements.txt|tae.Rmd|utils/loadpackages.R

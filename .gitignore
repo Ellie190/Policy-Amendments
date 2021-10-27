@@ -35,4 +35,16 @@
 # Renviron
 .Renviron
 
-~NCdata.xlsx
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+
+
+
