@@ -14,6 +14,7 @@ library(tidytext)
 library(ggwordcloud)
 library(tidyquant)
 library(tidyverse)
+library(markdown)
 
 
 
@@ -169,8 +170,7 @@ dashboardPage(
                          box(title = "Tweet Proximity: Search Radius", status = "white",
                              icon = icon("map-marked-alt"),
                              width = 12, solidHeader = TRUE, maximizable = TRUE,
-                             leafletOutput("tweet_prox"))),
-),
+                             leafletOutput("tweet_prox")))),
                 fluidRow(
                   column(6,
                          box(title = "Sentiment Polarity", status = "white",
@@ -184,7 +184,12 @@ dashboardPage(
                              plotOutput("word_plt")))
                 )
               )
-              ) # end of pi tab
+              ), # end of pi tab
+      tabItem("di",
+              fluidPage(
+                titlePanel("Natural Resource and Human Development Information")
+              ))
+
     ) # end of tabItems 
   ) # end of body
 ) # end of Page 
