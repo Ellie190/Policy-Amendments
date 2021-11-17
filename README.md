@@ -49,7 +49,8 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 ![Figure 5](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture5.png) <br>
 
-## Policy Intelligence
+## Policy Intelligence (PI)
+**Inspiration for PI dashboard tab by `Business Science (Youtube):`** https://www.youtube.com/watch?v=S5H0eUeL_gQ&t=3398s
 **Twitter For Analysis -** Twitter can provide key insights into what citizens are saying about Natural Resources and the Human Development Index. This is a great way to find out about what is happening or trending.
 
 **Positive Sentiment -** This can highlight where citizens are positively responding to NR and HDI delivery.
