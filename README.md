@@ -9,7 +9,7 @@ During the past decade, advances in information technology have ignited a revolu
 
 The purpose of this dashboard is to understand how the percentage of Natural Resources (NR) and Human Development Index (HDI) varies in Northern Cape (NC) . This is for the purpose of providing data-driven policy recommendations. Policy recommendations that considers geographic mapping of cities or towns and what citizens complain about (policy intelligence)
 
-## Dashboard 
+## R Shiny Dashboard 
 ![Figure 1](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture1.png) <br>
 
 ## Natural Resources
