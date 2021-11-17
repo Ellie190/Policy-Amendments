@@ -46,7 +46,7 @@
 # User-specific files
 .Ruserdata
 
-# Data file
+# Ignore All (xlsx) files
 *.xlsx
 
 
