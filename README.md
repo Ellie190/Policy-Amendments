@@ -16,7 +16,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
 
 **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
-**Natural Resource Indicators:** `Availability of water, Argricultural Potential, Mining Potential, Mining Potential, Tourism Potential, Environment Sensitivity`
+**Natural Resource Indicators:** `Availability of water, Argricultural Potential, Mining Potential, Tourism Potential, Environment Sensitivity`
 
 **Clustering NR -** Kmeans clustering is used to cluster (group) cities/towns with similar Natural Resources. <br>
 **Natural Resource City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
