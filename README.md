@@ -12,7 +12,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 ## R Shiny Dashboard 
 ![Figure 1](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture1.png) <br>
 
-## Natural Resources
+## Natural Resources (NR)
 **Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
 
 **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
@@ -29,7 +29,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
-## Human Development Index
+## Human Development Index (HDI)
 **Human Development -** Human development is defined as the process of enlarging people’s freedoms and opportunities and improving their well-being
 
 **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
