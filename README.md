@@ -18,12 +18,12 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
 **Natural Resource Indicators:** Availability of water, Argricultural Potential, Mining Potential, Mining Potential, Tourism Potential, Environment Sensitivity
 
-**Clustering NR -** Kmeans clustering is used to cluster (group) with similar Natural Resources. <br>
+**Clustering NR -** Kmeans clustering is used to cluster (group) cities/towns with similar Natural Resources. <br>
 **Natural Resource City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
 
 ![Figure 2](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture2.png) <br>
 
-**City Group Mapping** shows geographical location of each cluster <br>
+**City Group Mapping** shows geographical location of each cluster (group)<br>
 **Group Table** shows natural resource indicator percent in each cluster (group) <br>
 **NR group Count** shows how many towns or cities are in a particular cluster (group)
 
@@ -36,7 +36,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 **Human Development Indicators:** Education, Income, Occupation, Health Status, Housing
 
-**Clustering HDI -** Kmeans clustering is used to cluster (group) with similar Human Development Index. <br>
+**Clustering HDI -** Kmeans clustering is used to cluster (group) cities/towns with similar Human Development Index. <br>
 **Human Development Index City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
 
 ![Figure 4](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture4.png) <br>
