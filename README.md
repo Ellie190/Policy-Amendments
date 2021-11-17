@@ -66,7 +66,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 ![Figure 7](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture7.png) <br>
 
-**Sentiment Polarity:** This shows how positive or negative a tweet is. Since they may numerous tweets, focusing on extreme negative and positive tweets may become necessary. The `upper red line` shows the positive outlier tweets (extreme positive tweets above the red line). The `lower red line` shows the negative outlier tweets (extreme negative tweets below the red line). 
+**Sentiment Polarity:** This shows how positive or negative a tweet is. Since there may be numerous tweets at times, focusing on extreme negative and positive tweets may become necessary. The `upper red line` shows the positive outlier tweets (extreme positive tweets above the red line). The `lower red line` shows the negative outlier tweets (extreme negative tweets below the red line). 
 
 ![Figure 8](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture8.png) <br>
 
