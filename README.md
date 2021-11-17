@@ -26,7 +26,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **City Group Mapping** shows geographical location of each cluster (group)<br>
 **Group Table** shows natural resource indicator percent in each cluster (group) <br>
 **NR group Count** shows how many towns or cities are in a particular cluster (group) <br>
-**Map Circle (green, red):** Ecah of these circles contains NR information about a particular city/town. This information is shown when any circle in the map is clicked. 
+**Map Circle (green, red):** Each of these circles contains NR information about a particular city/town. This information is shown when any circle on the map is clicked. 
 
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
@@ -45,7 +45,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **City Group Mapping** shows geographical location of each cluster <br>
 **Group Table** shows human development index indicator percent in each cluster (group) <br>
 **NR group Count** shows how many towns or cities are in a particular cluster (group) <br>
-**Map Circle (green, red):** Ecah of these circles contains HDI information about a particular city/town. This information is shown when any circle in the map is clicked. 
+**Map Circle (green, red):** Each of these circles contains HDI information about a particular city/town. This information is shown when any circle on the map is clicked. 
 
 ![Figure 5](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture5.png) <br>
 
