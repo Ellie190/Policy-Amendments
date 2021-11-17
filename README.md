@@ -15,17 +15,29 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 ## Natural Resources
 **Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
 
-**Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources
+**Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
+**Natural Resource Indicators:** Availability of water, Argricultural Potential, Mining Potential, Mining Potential, Tourism Potential, Environment Sensitivity
+
+**Clustering NR -** Kmeans clustering is used to cluster (group) wns with similar Natural Resources. <br>
+**Natural Resource City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
 
 ![Figure 2](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture2.png) <br>
 
-
+**City Group Mapping** shows geographical location of each cluster <br>
+**Group Table** shows natural resource percent in each cluster (group)
+**NR group Count** shows how many towns or cities are in a particular cluster (group)
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
 ## Human Development Index
 **Human Development -** Human development is defined as the process of enlarging people’s freedoms and opportunities and improving their well-being
 
 **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
+
+**Human Development Indicators:** Education, Income, Occupation, Health Status, Housing
+
+**Clustering NR -** Kmeans clustering is used to cluster (group) wns with similar Natural Resources. <br>
+**Hity Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
+
 ![Figure 4](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture4.png) <br>
 
 
