@@ -49,6 +49,9 @@
 # Ignore All (xlsx) files
 *.xlsx
 
+# Ignore deployment file
+*.dcf
+
 
 
 
