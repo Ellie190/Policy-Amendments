@@ -45,13 +45,13 @@ library(tidyquant)
 ```{r}
   
 # create token named "twitter_token"
-twitter_token <- create_token(
-  app = Sys.getenv("app"),
-  consumer_key = Sys.getenv("key"),
-  consumer_secret = Sys.getenv("secret"),
-  access_token = Sys.getenv("access_token"),
-  access_secret = Sys.getenv("access_secret")
-  )
+# twitter_token <- create_token(
+#   app = Sys.getenv("app"),
+#   consumer_key = Sys.getenv("key"),
+#   consumer_secret = Sys.getenv("secret"),
+#   access_token = Sys.getenv("access_token"),
+#   access_secret = Sys.getenv("access_secret")
+#   )
 
 ```
 
@@ -67,25 +67,40 @@ geocode_ES <- function(loc, mil) {
 ```
 
 #### Tweet Search
+- This can be uncommented for a search
+- However we saved the search data for later use and for this notebook
 ```{r}
-st <- search_tweets(
-  q = "covid19",
-  n =10,
-  include_rts = FALSE,
-  lang = "en",
-  geocode = geocode_ES("South Africa", 500)
-)
+# st <- search_tweets(
+#   q = "#water",
+#   n =50,
+#   include_rts = FALSE,
+#   lang = "en",
+#   geocode = geocode_ES("South Africa", 500)
+# )
+
+```
+
+
+Uncomment after saving data
+```{r}
+# st %>% write_rds("water_data.rds")
+```
+
+Read saved data
+```{r}
+st <- read_rds("water_data.rds")
 ```
 
 
 #### Data Analysis
 ```{r}
+# Viewing data code: can be uncommented
 
-st %>% glimpse()
+# st %>% glimpse()
 
-st %>% select(contains("coords")) %>% 
-  unnest_wider(geo_coords) %>% 
-  filter(!is.na(...1))
+# st %>% select(contains("coords")) %>% 
+#   unnest_wider(geo_coords) %>% 
+#   filter(!is.na(...1))
   
 # geo_data <- st %>%
 #   tidygeocoder::geocode(location, method = 'osm', lat = latitude, long = longitude)
@@ -130,23 +145,39 @@ tweets_tokenized_tbl <- st %>%
   rowid_to_column() %>% 
   unnest_tokens(word, text)
 
-tweets_tokenized_tbl
+# tweets_tokenized_tbl
 
-tweets_tokenized_tbl %>% count(word, sort = TRUE)
+tweets_tokenized_tbl %>% count(word, sort = TRUE) %>% head()
 
 ```
 
 
 #### Sentiment analysis
 - Sentiment dictionaries
+
+Afinn dictionary
 ```{r}
 
-get_sentiments(lexicon = "bing") # Categorical Positive / Negative
+# get_sentiments(lexicon = "bing")  # Categorical Positive / Negative
+# 
+# get_sentiments(lexicon = "afinn") # Assign polarity
 
-get_sentiments(lexicon = "afinn") # Assign polarity
 
+get_sentiments(lexicon = "afinn") %>% head()
+
+get_sentiments(lexicon = "afinn") %>% nrow()
 
 ```
+
+
+Bing dictionary
+```{r}
+
+get_sentiments(lexicon = "bing")  %>% head()
+
+get_sentiments(lexicon = "bing")  %>% nrow()
+```
+
 
 
 Joining sentiment dictionaries with tokenized text
@@ -161,8 +192,8 @@ Measuring sentiment
 
 ```{r}
 # Overall sentiment
-sentiment_bin_tbl %>% count(sentiment)
-sentiment_bin_tbl$word
+# sentiment_bin_tbl %>% count(sentiment)
+# sentiment_bin_tbl$word
 
 #Sentiment by user
 Sentiment_by_row_id_tbl <- sentiment_bin_tbl %>% 
@@ -174,6 +205,7 @@ Sentiment_by_row_id_tbl <- sentiment_bin_tbl %>%
     st %>% select(screen_name, text) %>% rowid_to_column()
   )
 
+Sentiment_by_row_id_tbl %>% head()
 ```
 
 

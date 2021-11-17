@@ -46,5 +46,9 @@
 # User-specific files
 .Ruserdata
 
+# Data file
+geo_NCdata.xlsx
+NCdata.xlsx
+
 
 
