@@ -18,6 +18,8 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources
 
 ![Figure 2](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture2.png) <br>
+
+
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
 ## Human Development Index
@@ -25,6 +27,8 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
 ![Figure 4](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture4.png) <br>
+
+
 ![Figure 5](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture5.png) <br>
 
 ## Policy Intelligence
@@ -37,7 +41,11 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **Negative Sentiment -** This can highlight key issues citizens care about.
 
 ![Figure 6](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture6.png) <br>
+
+
 ![Figure 7](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture7.png) <br>
+
+
 ![Figure 8](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture8.png) <br>
 
 ## Dashboard Info Page
