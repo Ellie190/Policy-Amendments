@@ -16,7 +16,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 **Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
 
 **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
-**Natural Resource Indicators:** Availability of water, Argricultural Potential, Mining Potential, Mining Potential, Tourism Potential, Environment Sensitivity
+**Natural Resource Indicators:** `Availability of water, Argricultural Potential, Mining Potential, Mining Potential, Tourism Potential, Environment Sensitivity`
 
 **Clustering NR -** Kmeans clustering is used to cluster (group) cities/towns with similar Natural Resources. <br>
 **Natural Resource City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
@@ -34,7 +34,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
 
-**Human Development Indicators:** Education, Income, Occupation, Health Status, Housing
+**Human Development Indicators:** `Education, Income, Occupation, Health Status, Housing`
 
 **Clustering HDI -** Kmeans clustering is used to cluster (group) cities/towns with similar Human Development Index. <br>
 **Human Development Index City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
