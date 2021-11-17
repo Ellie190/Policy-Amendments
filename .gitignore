@@ -47,8 +47,8 @@
 .Ruserdata
 
 # Data file
-geo_NCdata.xlsx
-NCdata.xlsx
+*.xlsx
+
 
 
 
