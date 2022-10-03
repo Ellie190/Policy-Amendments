@@ -1,6 +1,8 @@
 # Policy-Amendments
 A projected aimed at understanding how resources vary in Northern Cape cities or towns to make decisions that influence policy amendments
 
+## Dashboard Access Link
+https://ds-analytics.shinyapps.io/Policy-Amendments/
 
 ## Context
 During the past decade, advances in information technology have ignited a revolution in decision-making, from business to sports to policing. Previously, decisions in these areas had been heavily influenced by factors other than empirical evidence, including personal experience or observation, instinct, hype, and dogma or belief. The ability to collect and analyse large amounts of data, however, has allowed decision-makers to cut through these potential distortions to discover what really works.
