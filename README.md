@@ -12,7 +12,7 @@ During the past decade, advances in information technology have ignited a revolu
 The purpose of this dashboard is to understand how the percentage of Natural Resources (NR) and Human Development Index (HDI) varies in Northern Cape (NC) . This is for the purpose of providing data-driven policy recommendations. Policy recommendations that considers geographic mapping of cities or towns and what citizens complain about (policy intelligence)
 
 ## Resources
-**R Libraries:** `shiny`, `bs4Dash`, `readxl`, `dplyr`, `tidygeocoder`, `janitor`, `leaflet`, `plotly`, `DT`, `leafpop`, `factoextra`, `rtweet`, `tidytext`, `ggwordcloud`, `tidyquant`, `tidyverse`, `waiter`, `shinycssloaders`
+**R Libraries:** `shiny`, `bs4Dash`, `readxl`, `dplyr`, `tidygeocoder`, `janitor`, `leaflet`, `plotly`, `DT`, `leafpop`, `factoextra`, `rtweet`, `tidytext`, `ggwordcloud`, `tidyquant`, `tidyverse`, `waiter`, `shinycssloaders` <br>
 **rtweet version 0.7.0 installation:**
 ```
 library(devtools)
