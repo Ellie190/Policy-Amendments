@@ -18,6 +18,20 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 library(devtools)
 install_version("rtweet", version = "0.7.0", repos = "http://cran.us.r-project.org")
 ```
+**Create `.Renviron` file for rtweet API in R project folder**
+```
+library(usethis)
+usethis::edit_r_environ("project")
+```
+
+**Edit `.Renviron` file
+```
+app=xxxxxxxxxxxxxxx
+key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+secret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+access_token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+access_secret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
 ## R Shiny Dashboard 
 ![Figure 1](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture1.png) <br>
