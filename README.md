@@ -48,20 +48,19 @@ token <- create_token(
 ![Figure 1](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture1.png) <br>
 
 ## Natural Resources (NR)
-**Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
+- **Natural Resources -** Natural resources are materials from the Earth that are used to support life and meet people’s needs
 
-**Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources <br>
-**Natural Resource Indicators:** `Availability of water, Argricultural Potential, Mining Potential, Tourism Potential, Environment Sensitivity`
-
-**Clustering NR -** Kmeans clustering is used to cluster (group) cities/towns with similar Natural Resources. <br>
-**Natural Resource City Groups** shows how distinct the clusters are for the selected number of groups (clusters)
+- **Natural Resource Policy -** A program that prepares individuals to plan, develop, manage, and evaluate programs to protect and regulate natural habitats and renewable natural resources 
+- **Natural Resource Indicators:** `Availability of water, Argricultural Potential, Mining Potential, Tourism Potential, Environment Sensitivity`
+- **Clustering NR -** Kmeans clustering is used to cluster (group) cities/towns with similar Natural Resources. 
+- **Natural Resource City Groups** shows how distinct the clusters are for the selected number of groups (clusters) <br> <br>
 
 ![Figure 2](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture2.png) <br>
 
-**City Group Mapping** shows geographical location of each cluster (group)<br>
-**Group Table** shows natural resource indicator percent in each cluster (group) <br>
-**NR group Count** shows how many towns or cities are in a particular cluster (group) <br>
-**Map Circle (green, red):** Each of these circles contains NR information about a particular city/town. This information is shown when any circle on the map is clicked. 
+- **City Group Mapping** shows geographical location of each cluster (group)
+- **Group Table** shows natural resource indicator percent in each cluster (group) 
+- **NR group Count** shows how many towns or cities are in a particular cluster (group) 
+- **Map Circle (green, red):** Each of these circles contains NR information about a particular city/town. This information is shown when any circle on the map is clicked.  <br>
 
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
