@@ -65,33 +65,33 @@ token <- create_token(
 ![Figure 3](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture3.png) <br>
 
 ## Human Development Index (HDI)
-**Human Development -** Human development is defined as the process of enlarging people’s freedoms and opportunities and improving their well-being
+- **Human Development -** Human development is defined as the process of enlarging people’s freedoms and opportunities and improving their well-being
 
-**Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
+- **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
 
-**Human Development Indicators:** `Education, Income, Occupation, Health Status, Housing`
+-**Human Development Indicators:** `Education, Income, Occupation, Health Status, Housing`
 
-**Clustering HDI -** Kmeans clustering is used to cluster (group) cities/towns with similar Human Development Index. <br>
-**Human Development Index City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
+- **Clustering HDI -** Kmeans clustering is used to cluster (group) cities/towns with similar Human Development Index. 
+- **Human Development Index City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
 
 ![Figure 4](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture4.png) <br>
 
-**City Group Mapping** shows geographical location of each cluster <br>
-**Group Table** shows human development index indicator percent in each cluster (group) <br>
-**NR group Count** shows how many towns or cities are in a particular cluster (group) <br>
-**Map Circle (green, red):** Each of these circles contains HDI information about a particular city/town. This information is shown when any circle on the map is clicked. 
+- **City Group Mapping:** shows geographical location of each cluster <br>
+- **Group Table:** shows human development index indicator percent in each cluster (group) <br>
+- **NR group Count:** shows how many towns or cities are in a particular cluster (group) <br>
+- **Map Circle (green, red):** Each of these circles contains HDI information about a particular city/town. This information is shown when any circle on the map is clicked. 
 
 ![Figure 5](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture5.png) <br>
 
 ## Policy Intelligence (PI)
-**Inspiration for PI dashboard tab by:** [Business Science (Youtube)](https://www.youtube.com/watch?v=S5H0eUeL_gQ&t=3398s) <br>
-**Twitter For Analysis -** Twitter can provide key insights into what citizens are saying about Natural Resources and the Human Development Index. This is a great way to find out about what is happening or trending.
+- **Inspiration for PI dashboard tab by:** [Business Science (Youtube)](https://www.youtube.com/watch?v=S5H0eUeL_gQ&t=3398s) <br>
+- **Twitter For Analysis -** Twitter can provide key insights into what citizens are saying about Natural Resources and the Human Development Index. This is a great way to find out about what is happening or trending.
 
-**Positive Sentiment -** This can highlight where citizens are positively responding to NR and HDI delivery.
+- **Positive Sentiment -** This can highlight where citizens are positively responding to NR and HDI delivery.
 
-**Negative Sentiment -** This can highlight key issues citizens care about.
+- **Negative Sentiment -** This can highlight key issues citizens care about.
 
-**Tweet Proximity: Search Radius -** This shows where the tweets are coming from/extracted from
+- **Tweet Proximity: Search Radius -** This shows where the tweets are coming from/extracted from
 
 ![Figure 6](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture6.png) <br>
 
