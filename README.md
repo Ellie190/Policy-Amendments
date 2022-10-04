@@ -69,7 +69,7 @@ token <- create_token(
 
 - **Human Development Index -** The HDI is a summary measure of human development. The HDI is a summary composite measure of a country’s average achievements in three basic aspects of human development: health, knowledge and standard of living. It is a measure of a country’s average achievements in three dimensions of human development. 
 
--**Human Development Indicators:** `Education, Income, Occupation, Health Status, Housing`
+- **Human Development Indicators:** `Education, Income, Occupation, Health Status, Housing`
 
 - **Clustering HDI -** Kmeans clustering is used to cluster (group) cities/towns with similar Human Development Index. 
 - **Human Development Index City Groups** This shows how distinct the clusters are for the selected number of groups (clusters)
@@ -95,13 +95,13 @@ token <- create_token(
 
 ![Figure 6](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture6.png) <br>
 
-**Sentiment -** A sentiment is a view or opinon that is held or expressed. Similar to: View, point of view, feeling, attitude, thought. Positive and negative sentiments can be extratced from the tweets posted on twitter.
+- **Sentiment -** A sentiment is a view or opinon that is held or expressed. Similar to: View, point of view, feeling, attitude, thought. Positive and negative sentiments can be extratced from the tweets posted on twitter.
 
-**Sentiment polarity** for an element defines the orientation of the expressed sentiment, i.e., it determines if the tweet expresses the positive, negative or neutral sentiment of the user about the entity in consideration.
+- **Sentiment polarity** for an element defines the orientation of the expressed sentiment, i.e., it determines if the tweet expresses the positive, negative or neutral sentiment of the user about the entity in consideration.
 
 ![Figure 7](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture7.png) <br>
 
-**Sentiment Polarity:** This shows how positive or negative a tweet is. Since there may be numerous tweets at times, focusing on extreme negative and positive tweets may become necessary. The `upper red line` shows the positive outlier tweets (extreme positive tweets above the red line). The `lower red line` shows the negative outlier tweets (extreme negative tweets below the red line). 
+- **Sentiment Polarity:** This shows how positive or negative a tweet is. Since there may be numerous tweets at times, focusing on extreme negative and positive tweets may become necessary. The `upper red line` shows the positive outlier tweets (extreme positive tweets above the red line). The `lower red line` shows the negative outlier tweets (extreme negative tweets below the red line). 
 
 ![Figure 8](https://github.com/Ellie190/Policy-Amendments/blob/main/Dasboard%20Images/Picture8.png) <br>
 
