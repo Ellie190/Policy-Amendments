@@ -13,6 +13,7 @@ The purpose of this dashboard is to understand how the percentage of Natural Res
 
 ## Resources
 **R Libraries:** `shiny`, `bs4Dash`, `readxl`, `dplyr`, `tidygeocoder`, `janitor`, `leaflet`, `plotly`, `DT`, `leafpop`, `factoextra`, `rtweet`, `tidytext`, `ggwordcloud`, `tidyquant`, `tidyverse`, `waiter`, `shinycssloaders` <br>
+
 **rtweet version 0.7.0 installation:**
 ```
 library(devtools)
