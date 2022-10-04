@@ -24,13 +24,24 @@ library(usethis)
 usethis::edit_r_environ("project")
 ```
 
-**Edit `.Renviron` file**
+**Edit `.Renviron` file:**
 ```
 app=xxxxxxxxxxxxxxx
 key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 secret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 access_token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 access_secret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Create Twitter authorization token(s) in server.R:**
+```
+token <- create_token(
+    app = Sys.getenv("app"),
+    consumer_key = Sys.getenv("key"),
+    consumer_secret = Sys.getenv("secret"),
+    access_token = Sys.getenv("access_token"),
+    access_secret = Sys.getenv("access_secret")
+  )
 ```
 
 ## R Shiny Dashboard 
